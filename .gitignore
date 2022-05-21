@@ -1,11 +1,13 @@
 # Prerequisites
 *.d
 *phrases
+*addmx
 # Object files
 *.o
 *.ko
 *.obj
 *.elf
+*.vscode
 
 # Linker output
 *.ilk
