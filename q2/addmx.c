@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 
 int main(int argc, char* argv[]){
-  if (argc<3  || argc>4 || (argc==3 && (!strstr(argv[1],".txt")||!strstr(argv[1],".txt")))){
+  if (argc<3  || argc>4 || (argc==3 && (!strstr(argv[1],".txt")||!strstr(argv[2],".txt")))){
     printf("%s","usage: addmx file1 file2\n");
     return 1;
   }
@@ -164,8 +164,8 @@ int main(int argc, char* argv[]){
       printf("%d ",partials[j+(nCollumns*i)]);
     }
     printf("\n");
-  }          
-            
+  }
+     
     
   return 0;
 }

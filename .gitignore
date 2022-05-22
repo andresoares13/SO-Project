@@ -2,12 +2,14 @@
 *.d
 *phrases
 *addmx
+*cypher
 # Object files
 *.o
 *.ko
 *.obj
 *.elf
 *.vscode
+
 
 # Linker output
 *.ilk
