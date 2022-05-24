@@ -45,18 +45,21 @@ void str_replace(char *target, const char *needle, const char *replacement)
 
 
 int main(int argc, char* argv[]) {
-    if (argc>3 || argc<2 || !strstr(argv[1],".txt")){
-        return 1;
-    }
+
     int nbytes, fd[2],fd2[2];
     pid_t pid;
-    FILE* ptr=fopen(argv[1],"r");
+
     char ch;
-    if (ptr==NULL){
-        printf("%s","file not found \n");
-        return 1;
-    }
+
     char line[LINESIZE];
+
+    int counter=0;
+    while(read(STDIN_FILENO, &ch, 1) > 0){
+       line[counter]=ch;
+       counter++;
+    }
+        
+
     if (pipe(fd) < 0) {
         perror("pipe error");
         exit(EXIT_FAILURE); 
@@ -73,15 +76,22 @@ int main(int argc, char* argv[]) {
         /* parent */
         close(fd[READ_END]);
 
+
         //writes to child
-        int counter=0;
-        while(!feof(ptr)){ //stores the whole text file
-            ch= fgetc(ptr);
-            if (!feof(ptr)){
+        
+
+
+
+        /*
+        while(!feof(stdin)){ //stores the whole text file
+            ch= fgetc(stdin);
+            printf("%c",ch);
+            if (!feof(stdin)){
                line[counter]=ch; 
                counter++;
             }
         }
+        */
         
         if ((nbytes = write(fd[WRITE_END], line, strlen(line))) < 0) { //sends it to the child
             fprintf(stderr, "Unable to write to pipe: %s\n", strerror(errno));
@@ -158,7 +168,8 @@ int main(int argc, char* argv[]) {
             memset(w2, 0, sizeof(w2));
 
             
-        }  
+        }
+        fclose(ptr2);
         close(fd[WRITE_END]);
 
         //writes to parent, by this point the changes have been made already

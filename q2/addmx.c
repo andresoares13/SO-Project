@@ -165,6 +165,9 @@ int main(int argc, char* argv[]){
     }
     printf("\n");
   }
+
+  fclose(ptr1);
+  fclose(ptr2);
      
     
   return 0;
