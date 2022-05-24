@@ -79,19 +79,6 @@ int main(int argc, char* argv[]) {
 
         //writes to child
         
-
-
-
-        /*
-        while(!feof(stdin)){ //stores the whole text file
-            ch= fgetc(stdin);
-            printf("%c",ch);
-            if (!feof(stdin)){
-               line[counter]=ch; 
-               counter++;
-            }
-        }
-        */
         
         if ((nbytes = write(fd[WRITE_END], line, strlen(line))) < 0) { //sends it to the child
             fprintf(stderr, "Unable to write to pipe: %s\n", strerror(errno));
