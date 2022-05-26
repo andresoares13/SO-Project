@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
             
         }
         fclose(ptr2);
-        close(fd[WRITE_END]);
+      
 
         //writes to parent, by this point the changes have been made already
         close(fd2[READ_END]);

@@ -7,16 +7,16 @@
 #include <sys/wait.h>
 
 int main(int argc, char* argv[]){
-  if (argc<3  || argc>4 || (argc==3 && (!strstr(argv[1],".txt")||!strstr(argv[2],".txt")))){
+  if (argc<3  || argc>=4 || (argc==3 && (!strstr(argv[1],".txt")||!strstr(argv[2],".txt")))){
     printf("%s","usage: addmx file1 file2\n");
     return 1;
   }
   char l1[10];
   char l2[10];
-  char collmuns[10];
+  char lines[10];
   char processes[10];
-  int nProcesses;
-  int nCollumns;
+  int nProcesses; //equal to the number of columns since every process will work on one
+  int nLines;
   int memsize;
   int index=0;
   char ch;
@@ -61,12 +61,12 @@ int main(int argc, char* argv[]){
     if (ch==120){
         break;
     }
-    collmuns[index]=ch;
+    lines[index]=ch;
     index++;
   }
-  nCollumns=atoi(collmuns);
+  nLines=atoi(lines);
   nProcesses=atoi(processes);
-  memsize=nCollumns*nProcesses;
+  memsize=nLines*nProcesses;
   int *partials = mmap(NULL, memsize, PROT_READ|PROT_WRITE,MAP_SHARED|MAP_ANONYMOUS, 0, 0);
   if(partials == MAP_FAILED){
     perror("mmap");
@@ -85,7 +85,7 @@ int main(int argc, char* argv[]){
     }
     if(pid == 0) {
       
-      for (int j=0;j<nCollumns;j++){
+      for (int j=0;j<nLines;j++){
         int x,y;
         int counter = j;
         int emptySkips = i; //if i=0 you dont wanna skip to the 3rd character, if the i=1 you wanna get to the column 3rd character and so on
@@ -143,7 +143,7 @@ int main(int argc, char* argv[]){
         
         rewind(ptr1); //goes back to the beggining of both files before starting next process
         rewind(ptr2);
-        partials[(i*nCollumns)+j]=x+y; // store in the shared space the sum of both characters in the line and column corresponding to the process, process 1 takes care of 4 lines in the 1st column in the example
+        partials[(i*nLines)+j]=x+y; // store in the shared space the sum of both characters in the line and column corresponding to the process, process 1 takes care of 4 lines in the 1st column in the example
       }
       exit(EXIT_SUCCESS);
       
@@ -158,10 +158,10 @@ int main(int argc, char* argv[]){
   }
   
   
-  printf("%d%s%d\n",nCollumns,"x",nProcesses); //prints out the result in the correct format
-  for (int j=0;j<nCollumns;j++){
+  printf("%d%s%d\n",nLines,"x",nProcesses); //prints out the result in the correct format
+  for (int j=0;j<nLines;j++){
     for (int i =0; i<nProcesses;i++){
-      printf("%d ",partials[j+(nCollumns*i)]);
+      printf("%d ",partials[j+(nLines*i)]);
     }
     printf("\n");
   }
