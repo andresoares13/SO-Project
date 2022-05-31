@@ -41,15 +41,14 @@ int main(int argc, char* argv[]){
   rewind(ptr1);
   while(!feof(ptr1)){
       ch= fgetc(ptr1);
-      if (ch==10){
+      if (ch==10){ //new line
           break;
       }
       if (afterX){
-
-        processes[index]=ch;
+        processes[index]=ch; //number of columns
         index++;
       }
-      if (ch==120){
+      if (ch==120){ //x
           afterX=true;
       }
       
@@ -58,10 +57,10 @@ int main(int argc, char* argv[]){
   rewind(ptr1);
   while(!feof(ptr1)){
     ch= fgetc(ptr1);
-    if (ch==120){
+    if (ch==120){ //x
         break;
     }
-    lines[index]=ch;
+    lines[index]=ch; //number of lines
     index++;
   }
   nLines=atoi(lines);
@@ -109,7 +108,7 @@ int main(int argc, char* argv[]){
               x=ch - '0';
               break;
             }
-            if (!skipLine && ch==32){
+            if (!skipLine && ch==32){ //32=space
               emptySkips--;
             }
           }
@@ -169,6 +168,5 @@ int main(int argc, char* argv[]){
   fclose(ptr1);
   fclose(ptr2);
      
-    
   return 0;
 }

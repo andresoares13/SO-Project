@@ -26,8 +26,8 @@ int main(int argc, char* argv[]){
   char ch;
   bool point=false;
   while(!feof(ptr)){
-    if (index==0){
-      count++;
+    if (index==0){ //start
+      count++; //1
       if (flag){
         printf("[%d] ",count);
       }
@@ -43,13 +43,13 @@ int main(int argc, char* argv[]){
       printf("%c",ch); 
     }
 
-    if (ch==46|| ch==63 || ch==33){ 
-      count++;
+    if (ch==46|| ch==63 || ch==33){  // . or ! or ?
+      count++; 
       if (flag){
         point=true;
       }
     }
-    if (ch==EOF && flag){
+    if (ch==EOF && flag){ //end of file
       printf("\n");
     }
   }
